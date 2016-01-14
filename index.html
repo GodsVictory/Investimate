@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+        <title>Investimate</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <style>
+            body {
+                padding: 0px;
+                margin: 0px;
+                background: white;
+				font-family: Calibri;
+				font-size: 24px;
+				color: black;
+				text-align: center;
+            }
+			#main {
+				position: absolute;
+				width: 100%;
+				text-align: center;
+				top: 150px;
+			}
+			#info {
+				position: absolute;
+				width: 100%;
+				text-align: center;
+				top: 75px;
+			}
+			#calculationDiv {
+				position: absolute;
+				width: 100%;
+				text-align: center;
+				top: 300px;
+			}
+			#calculation {
+				text-align: right;
+				font-size: 16px;
+				margin: 0px auto;
+			}
+			td {
+				padding-left: 20px;
+			}
+			input {
+				color:black;
+				background-color:#e4f1f9;
+				border: 0px solid #848484;
+				outline:0; 
+				height:25px;
+				padding:10px;
+				text-align:right;
+				font-size: 20px;
+			}
+			.roundTL {
+			    -moz-border-radius-topleft: 5px;
+				-webkit-border-top-left-radius: 5px;
+				border-top-left-radius: 5px;
+				
+			}
+			.roundBL {
+				border-bottom-left-radius: 5px;
+				-moz-border-radius-bottomleft: 5px;
+				-webkit-border-bottom-left-radius: 5px;
+			}
+			.roundTR {
+				-moz-border-radius-topright: 5px;
+				-webkit-border-top-right-radius: 5px;
+				border-top-right-radius: 5px;
+			}
+			.roundBR {
+				border-bottom-right-radius: 5px;
+				-moz-border-radius-bottomright: 5px;
+				-webkit-border-bottom-right-radius: 5px;
+			}
+        </style>
+    </head>
+    <body>
+	<p>Investimate</p>
+	<div id="info"></div>
+	<div id="main">
+		<input type="number" step="1000" min="0" max="100000000000" value="3000" id="investedAmount" style="width: 150px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step=".1" min="0" max="100" value="8" id="annualInterest" style="width: 100px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step=".01" min="0" max="20" value=".17" id="annualFee" style="width: 100px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step="1" min="1" max="1000" value="25" id="yearsInvested" style="width: 100px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<br />
+		<br />
+		<input type="checkbox" id="investedAnnually" style="width:15px;height:15px;" onchange="calculate()" /> Invested Annually
+	</div>
+	<div id="calculationDiv">
+		<table id="calculation"></table>
+	</div>
+        <script>
+			var calc;
+			$(document).ready(function() {
+				$("#investedAmount").hover(function() {	$("#info").text("Invested Amount"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
+				$("#annualInterest").hover(function() {	$("#info").text("Annual Interest"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
+				$("#annualFee").hover(function() {	$("#info").text("Annual Fee"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
+				$("#yearsInvested").hover(function() {	$("#info").text("Years Invested"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
+				calculate();
+			});
+			
+			function calculate() {
+					if ($("#investedAmount").val() > 0 && $("#annualInterest").val() >= 0 && $("#annualFee").val() >= 0 && $("#yearsInvested").val() > 0) {
+						var invested = parseFloat($("#investedAmount").val());
+						var interest = parseFloat($("#annualInterest").val());
+						var fee = parseFloat($("#annualFee").val());
+						var years = parseFloat($("#yearsInvested").val());
+						if($("#investedAnnually").is(":checked")) {
+							var total = 0;
+							$("#calculation").empty();
+							for (i=1;i <= $("#yearsInvested").val();i++) {
+								total = (total + invested) * (1 + interest / 100) * (1 - fee / 100);								
+								$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td><td>$"+formatNumber(total - invested * i)+"</td><td>$"+formatNumber(invested * i)+"</td><td>$"+formatNumber((total * (interest / 100)))+"</td></tr>");
+							}
+							$("#calculation").append("<tr><td>Year</td><td>Return</td><td>Interest Acrued</td><td>Contributions</td><td>Reinvested Annual Return</td></tr>");
+							[].reverse.call($("#calculation tbody tr")).appendTo("#calculation tbody");
+						} else {
+							var total = invested;
+							$("#calculation").empty();
+							for (i=1;i <= $("#yearsInvested").val();i++) {
+								total += total * (interest / 100) * (1 - fee / 100);
+								$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td></tr>");
+							}
+							$("#calculation").append("<tr><td>Year</td><td>Return</td></tr>");
+							[].reverse.call($("#calculation tbody tr")).appendTo("#calculation tbody");
+						}
+					}
+			}
+			
+			function formatNumber(i) {
+				return i.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+			}
+		</script>
+    </body>
+</html>
