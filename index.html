@@ -19,10 +19,12 @@
 				text-align: center;
             }
 			#main {
-				position: absolute;
+				position: relative;
 				width: 100%;
 				text-align: center;
-				top: 150px;
+				top: 50px;
+				font-size:0px;
+				line-height:50px;
 			}
 			#info {
 				position: absolute;
@@ -31,10 +33,10 @@
 				top: 75px;
 			}
 			#calculationDiv {
-				position: absolute;
+				position: relative;
 				width: 100%;
 				text-align: center;
-				top: 300px;
+				top: 75px;
 			}
 			#calculation {
 				text-align: right;
@@ -53,27 +55,29 @@
 				padding:10px;
 				text-align:right;
 				font-size: 20px;
+				margin-left:3px;
+				margin-right:3px;
 			}
 			.roundTL {
-			    -moz-border-radius-topleft: 5px;
-				-webkit-border-top-left-radius: 5px;
-				border-top-left-radius: 5px;
+			    -moz-border-radius-topleft: 25px;
+				-webkit-border-top-left-radius: 25px;
+				border-top-left-radius: 25px;
 				
 			}
 			.roundBL {
-				border-bottom-left-radius: 5px;
-				-moz-border-radius-bottomleft: 5px;
-				-webkit-border-bottom-left-radius: 5px;
+				border-bottom-left-radius: 25px;
+				-moz-border-radius-bottomleft: 25px;
+				-webkit-border-bottom-left-radius: 25px;
 			}
 			.roundTR {
-				-moz-border-radius-topright: 5px;
-				-webkit-border-top-right-radius: 5px;
-				border-top-right-radius: 5px;
+				-moz-border-radius-topright: 25px;
+				-webkit-border-top-right-radius: 25px;
+				border-top-right-radius: 25px;
 			}
 			.roundBR {
-				border-bottom-right-radius: 5px;
-				-moz-border-radius-bottomright: 5px;
-				-webkit-border-bottom-right-radius: 5px;
+				border-bottom-right-radius: 25px;
+				-moz-border-radius-bottomright: 25px;
+				-webkit-border-bottom-right-radius: 25px;
 			}
         </style>
     </head>
@@ -81,13 +85,12 @@
 	<p>Investimate</p>
 	<div id="info"></div>
 	<div id="main">
-		<input type="number" step="1000" min="0" max="100000000000" value="3000" id="investedAmount" style="width: 150px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step=".1" min="0" max="100" value="8" id="annualInterest" style="width: 100px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step=".01" min="0" max="20" value=".17" id="annualFee" style="width: 100px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step="1" min="1" max="1000" value="25" id="yearsInvested" style="width: 100px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step="1000" min="0" max="1000000000" value="3000" id="investedAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step=".1" min="0" max="100" value="8" id="annualInterest" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step=".01" min="0" max="20" value=".17" id="annualFee" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+		<input type="number" step="1" min="1" max="1000" value="25" id="yearsInvested" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
 		<br />
-		<br />
-		<input type="checkbox" id="investedAnnually" style="width:15px;height:15px;" onchange="calculate()" /> Invested Annually
+		<input type="checkbox" id="investedAnnually" style="width:15px;height:15px;" onchange="calculate()" /><span style="font-size:24px">Invested Annually</span>
 	</div>
 	<div id="calculationDiv">
 		<table id="calculation"></table>
