@@ -99,8 +99,8 @@
 			var calc;
 			$(document).ready(function() {
 				$("#investedAmount").hover(function() {	$("#info").text("Invested Amount"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
-				$("#annualInterest").hover(function() {	$("#info").text("Annual Interest"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
-				$("#annualFee").hover(function() {	$("#info").text("Annual Fee"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
+				$("#annualInterest").hover(function() {	$("#info").text("Percent Annual Interest"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
+				$("#annualFee").hover(function() {	$("#info").text("Percent Annual Fees"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				$("#yearsInvested").hover(function() {	$("#info").text("Years Invested"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				calculate();
 			});
