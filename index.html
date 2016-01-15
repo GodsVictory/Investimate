@@ -106,31 +106,32 @@
 			});
 			
 			function calculate() {
-					if ($("#investedAmount").val() > 0 && $("#annualInterest").val() >= 0 && $("#annualFee").val() >= 0 && $("#yearsInvested").val() > 0) {
-						var invested = parseFloat($("#investedAmount").val());
-						var interest = parseFloat($("#annualInterest").val());
-						var fee = parseFloat($("#annualFee").val());
-						var years = parseFloat($("#yearsInvested").val());
-						if($("#investedAnnually").is(":checked")) {
-							var total = 0;
-							$("#calculation").empty();
-							for (i=1;i <= $("#yearsInvested").val();i++) {
-								total = (total + invested) * (1 + interest / 100) * (1 - fee / 100);								
-								$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td><td>$"+formatNumber(total - invested * i)+"</td><td>$"+formatNumber(invested * i)+"</td><td>$"+formatNumber((total * (interest / 100)))+"</td></tr>");
-							}
-							$("#calculation").append("<tr><td>Year</td><td>Return</td><td>Interest Acrued</td><td>Contributions</td><td>Reinvested Annual Return</td></tr>");
-							[].reverse.call($("#calculation tbody tr")).appendTo("#calculation tbody");
-						} else {
-							var total = invested;
-							$("#calculation").empty();
-							for (i=1;i <= $("#yearsInvested").val();i++) {
-								total += total * (interest / 100) * (1 - fee / 100);
-								$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td></tr>");
-							}
-							$("#calculation").append("<tr><td>Year</td><td>Return</td></tr>");
-							[].reverse.call($("#calculation tbody tr")).appendTo("#calculation tbody");
+				if ($("#investedAmount").val() > 0 && $("#annualInterest").val() >= 0 && $("#annualFee").val() >= 0 && $("#yearsInvested").val() > 0) {
+					var invested = parseFloat($("#investedAmount").val());
+					var interest = parseFloat($("#annualInterest").val());
+					var fee = parseFloat($("#annualFee").val());
+					var years = parseFloat($("#yearsInvested").val());
+					if($("#investedAnnually").is(":checked")) {
+						var total = 0;
+						$("#calculation").empty();
+						for (i=1;i <= $("#yearsInvested").val();i++) {
+							total = (total + invested) * (1 + interest / 100) * (1 - fee / 100);//- ((total + invested) + ((total + invested) * (1 + interest / 100))) / 2 * (fee / 100);
+							$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td><td>$"+formatNumber(total - invested * i)+"</td><td>$"+formatNumber(invested * i)+"</td><td>$"+formatNumber((total * (interest / 100)))+"</td></tr>");
 						}
+						$("#calculation").append("<tr><td>Year</td><td>Return</td><td>Interest Acrued</td><td>Contributions</td><td>Reinvested Annual Return</td></tr>");
+					} else {
+						var total = invested;
+						$("#calculation").empty();
+						for (i=1;i <= $("#yearsInvested").val();i++) {
+							total = total * (1 + interest / 100) * (1 - fee / 100);
+							$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td></tr>");
+						}
+						$("#calculation").append("<tr><td>Year</td><td>Return</td></tr>");
 					}
+				} else {
+					$("#calculation").empty();
+				}
+				[].reverse.call($("#calculation tbody tr")).appendTo("#calculation tbody");
 			}
 			
 			function formatNumber(i) {
