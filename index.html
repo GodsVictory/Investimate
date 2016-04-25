@@ -103,6 +103,10 @@
 				$("#annualFee").hover(function() {	$("#info").text("Percent Annual Fees"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				$("#yearsInvested").hover(function() {	$("#info").text("Years Invested"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				calculate();
+        $(".return").hover(function() {	$("#info").text("Total return at end of year"); $(this).focus(); }, function() { $("#info").text(""); });
+        $(".profit").hover(function() {	$("#info").text("Total interest accrued"); $(this).focus(); }, function() { $("#info").text(""); });
+        $(".contributions").hover(function() {	$("#info").text("Total contributions made"); $(this).focus(); }, function() { $("#info").text(""); });
+        $(".rr").hover(function() {	$("#info").text("Return if reinvested without contributing"); $(this).focus(); }, function() { $("#info").text(""); });
 			});
 			
 			function calculate() {
@@ -116,9 +120,9 @@
 						$("#calculation").empty();
 						for (i=1;i <= $("#yearsInvested").val();i++) {
 							total = (total + invested) * (1 + interest / 100) * (1 - fee / 100);//- ((total + invested) + ((total + invested) * (1 + interest / 100))) / 2 * (fee / 100);
-							$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td><td>$"+formatNumber(total - invested * i)+"</td><td>$"+formatNumber(invested * i)+"</td><td>$"+formatNumber((total * (interest / 100)))+"</td></tr>");
+							$("#calculation").append("<tr><td class='year'>"+i+"</td><td class='return'>$"+formatNumber(total)+"</td><td class='profit'>$"+formatNumber(total - invested * i)+"</td><td class='contributions'>$"+formatNumber(invested * i)+"</td><td class='rr'>$"+formatNumber((total * (interest / 100)))+"</td></tr>");
 						}
-						$("#calculation").append("<tr><td>Year</td><td>Return</td><td>Profit</td><td>Contributions</td><td>Reinvested Return</td></tr>");
+						$("#calculation").append("<tr><td class='year'>Year</td><td class='return'>Return</td><td class='profit'>Profit</td><td class='contributions'>Contributions</td><td class='rr'>Reinvested Return</td></tr>");
 					} else {
 						var total = invested;
 						$("#calculation").empty();
@@ -126,7 +130,7 @@
 							total = total * (1 + interest / 100) * (1 - fee / 100);
 							$("#calculation").append("<tr><td>"+i+"</td><td>$"+formatNumber(total)+"</td></tr>");
 						}
-						$("#calculation").append("<tr><td>Year</td><td>Return</td></tr>");
+						$("#calculation").append("<tr><td>Year</td><td class='return'>Return</td></tr>");
 					}
 				} else {
 					$("#calculation").empty();
