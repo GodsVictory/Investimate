@@ -22,21 +22,18 @@
               position: relative;
               width: 100%;
               text-align: center;
-              top: 50px;
-              font-size:0px;
+              font-size: 24px;
               line-height:50px;
             }
-            #info {
-              position: absolute;
-              width: 100%;
-              text-align: center;
-              top: 75px;
+            #maintable {
+              margin-left:auto; 
+              margin-right:auto;
             }
             #calculationDiv {
               position: relative;
               width: 100%;
               text-align: center;
-              top: 75px;
+              padding-top: 20px;
             }
             #calculation {
               text-align: right;
@@ -85,35 +82,45 @@
 	<p>Investimate</p>
 	<div id="info"></div>
 	<div id="main">
-	    <input type="number" step="1000" min="0" max="1000000000" value="0" id="startingAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step="1000" min="0" max="1000000000" value="3000" id="investedAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step=".1" min="0" max="100" value="8" id="annualInterest" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step=".01" min="0" max="20" value=".17" id="annualFee" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
-		<input type="number" step="1" min="1" max="1000" value="25" id="yearsInvested" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+    <table id="maintable">
+      <tr>
+        <td>
+          Starting<br>
+      	  <input type="number" step="1000" min="0" max="1000000000" value="0" id="startingAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+        </td>
+        <td>
+          Invested<br>
+		      <input type="number" step="1000" min="0" max="1000000000" value="3000" id="investedAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+        </td>
+        <td>
+          Interest<br>
+		      <input type="number" step=".1" min="0" max="100" value="8" id="annualInterest" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+        </td>
+        <td>
+          Fees<br>
+		      <input type="number" step=".01" min="0" max="20" value=".17" id="annualFee" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+        </td>
+        <td>
+          Years<br>
+		      <input type="number" step="1" min="1" max="1000" value="25" id="yearsInvested" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
+        </td>
+      </tr>
+    </table>
 		<br />
 		<input type="checkbox" id="investedAnnually" style="width:15px;height:15px;" checked onchange="calculate()" /><span style="font-size:24px">Invested Annually</span>
 	</div>
 	<div id="calculationDiv">
 		<table id="calculation"></table>
 	</div>
-        <script>
+  <script>
 			var calc;
 			$(document).ready(function() {
-			    $("#startingAmount").hover(function() {	$("#info").text("Starting Amount"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
-				$("#investedAmount").hover(function() {	$("#info").text("Invested Amount"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
-				$("#annualInterest").hover(function() {	$("#info").text("Percent Annual Interest"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
-				$("#annualFee").hover(function() {	$("#info").text("Percent Annual Fees"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
-				$("#yearsInvested").hover(function() {	$("#info").text("Years Invested"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				calculate();
-        $(".return").hover(function() {	$("#info").text("Total return at end of year"); $(this).focus(); }, function() { $("#info").text(""); });
-        $(".profit").hover(function() {	$("#info").text("Total interest accrued"); $(this).focus(); }, function() { $("#info").text(""); });
-        $(".contributions").hover(function() {	$("#info").text("Total contributions made"); $(this).focus(); }, function() { $("#info").text(""); });
-        $(".rr").hover(function() {	$("#info").text("Return if reinvested without contributing"); $(this).focus(); }, function() { $("#info").text(""); });
 			});
 			
 			function calculate() {
 				if ($("#investedAmount").val() > 0 && $("#annualInterest").val() >= 0 && $("#annualFee").val() >= 0 && $("#yearsInvested").val() > 0) {
-				    var starting = parseFloat($("#startingAmount").val());
+				  var starting = parseFloat($("#startingAmount").val());
 					var invested = parseFloat($("#investedAmount").val());
 					var interest = parseFloat($("#annualInterest").val());
 					var fee = parseFloat($("#annualFee").val());
@@ -144,6 +151,6 @@
 			function formatNumber(i) {
 				return i.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 			}
-		</script>
-    </body>
+  </script>
+  </body>
 </html>
