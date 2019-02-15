@@ -85,6 +85,7 @@
 	<p>Investimate</p>
 	<div id="info"></div>
 	<div id="main">
+	    <input type="number" step="1000" min="0" max="1000000000" value="0" id="startingAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
 		<input type="number" step="1000" min="0" max="1000000000" value="3000" id="investedAmount" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
 		<input type="number" step=".1" min="0" max="100" value="8" id="annualInterest" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
 		<input type="number" step=".01" min="0" max="20" value=".17" id="annualFee" style="width: 130px;" class="roundTL roundTR roundBL roundBR" oninput="calculate()" />
@@ -98,6 +99,7 @@
         <script>
 			var calc;
 			$(document).ready(function() {
+			    $("#startingAmount").hover(function() {	$("#info").text("Starting Amount"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				$("#investedAmount").hover(function() {	$("#info").text("Invested Amount"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				$("#annualInterest").hover(function() {	$("#info").text("Percent Annual Interest"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
 				$("#annualFee").hover(function() {	$("#info").text("Percent Annual Fees"); $(this).focus(); }, function() { $("#info").text(""); calculate() });
@@ -111,12 +113,13 @@
 			
 			function calculate() {
 				if ($("#investedAmount").val() > 0 && $("#annualInterest").val() >= 0 && $("#annualFee").val() >= 0 && $("#yearsInvested").val() > 0) {
+				    var starting = parseFloat($("#startingAmount").val());
 					var invested = parseFloat($("#investedAmount").val());
 					var interest = parseFloat($("#annualInterest").val());
 					var fee = parseFloat($("#annualFee").val());
 					var years = parseFloat($("#yearsInvested").val());
 					if($("#investedAnnually").is(":checked")) {
-						var total = 0;
+						var total = starting;
 						$("#calculation").empty();
 						for (i=1;i <= $("#yearsInvested").val();i++) {
 							total = (total + invested) * (1 + interest / 100) * (1 - fee / 100);//- ((total + invested) + ((total + invested) * (1 + interest / 100))) / 2 * (fee / 100);
